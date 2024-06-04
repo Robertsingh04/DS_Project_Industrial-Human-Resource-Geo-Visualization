@@ -35,12 +35,16 @@ total_state_workers = state_data['MainWorkersTotalPersons'].sum()
 total_district_workers = district_data['MainWorkersTotalPersons'].sum()
 
 # Set the font size and center the text for total state workers
+
 st.write(f"<div style='text-align: center; font-size: 24px;'>Total number of state workers: {total_state_workers}</div>", unsafe_allow_html=True)
 
 # Set the font size and center the text for total district workers
+
 st.write(f"<div style='text-align: center; font-size: 24px;'>Total number of district workers: {total_district_workers}</div>", unsafe_allow_html=True)
 st.subheader("Data Summary")
 st.write(data.describe())
+
+# State-wise Summary 
 
 state_summary = state_data[[
     'MainWorkersTotalPersons', 'MainWorkersTotalMales', 'MainWorkersTotalFemales',
@@ -64,8 +68,7 @@ fig.update_layout(barmode='stack')
 
 st.plotly_chart(fig)
 
-
-data = pd.read_csv(r"D:/Datascience/DataSet/final_Industrial_HR_Dataset.csv")
+# Select NIC Name ----Sidebar dropdown box
 
 
 filtered_nic_names = data[data['District'] == selected_district]['NICName'].unique()
@@ -76,9 +79,9 @@ filtered_nic_names = sorted(filtered_nic_names)
 selected_nic_name = st.sidebar.selectbox("Select NIC Name", filtered_nic_names, key="nic_name_selector")
 
 
-
-
+# Workers Distribution using subplots
 # Plotting data for Rural, Main, and Urban workers
+
 rural_cols = ['MainWorkersRuralPersons', 'MainWorkersRuralMales', 'MainWorkersRuralFemales']
 urban_cols = ['MainWorkersUrbanPersons', 'MainWorkersUrbanMales', 'MainWorkersUrbanFemales']
 
@@ -97,6 +100,7 @@ st.pyplot(fig)
 
 
 # Plotting data for Marginal workers (using pie chart)
+
 marginal_cols_rural = ['MarginalWorkersRuralPersons', 'MarginalWorkersRuralMales', 'MarginalWorkersRuralFemales']
 marginal_cols_urban = ['MarginalWorkersUrbanPersons', 'MarginalWorkersUrbanMales', 'MarginalWorkersUrbanFemales']
 
@@ -114,7 +118,7 @@ ax.set_title(f"{selected_state} - {selected_district} - Urban Marginal Workers D
 st.pyplot(fig)
 
 
-
+# Differences in State-wise
 
 main_cols = ['MainWorkersTotalPersons', 'MainWorkersTotalMales', 'MainWorkersTotalFemales']
 rural_cols = ['MainWorkersRuralPersons', 'MainWorkersRuralMales', 'MainWorkersRuralFemales']
@@ -141,6 +145,7 @@ st.plotly_chart(fig)
 
 
 # Geo-Map Visualization
+
 data = pd.read_csv(r"D:/Datascience/DataSet/final_Industrial_HR_Dataset.csv")
 
 state_data = data[(data['State'] == selected_state)]
